@@ -1,0 +1,83 @@
+* { box-sizing: border-box; }
+
+body {
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background: #eef1f6;
+    margin: 0;
+    padding: 40px 16px;
+    color: #1f2937;
+}
+
+.card {
+    max-width: 420px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 28px 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+}
+.card.wide { max-width: 760px; }
+
+h1 { font-size: 22px; margin: 0 0 4px; }
+h2 { font-size: 17px; margin-top: 26px; }
+.subtitle { color: #6b7280; font-size: 13px; margin: 0 0 20px; }
+
+label { display: block; font-size: 13px; font-weight: 600; margin: 14px 0 6px; }
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+}
+input[type=text]:focus, input[type=password]:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 11px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+}
+button:hover { background: #1d4ed8; }
+
+.alert {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fca5a5;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 14px;
+}
+
+.mode { margin-top: 16px; font-size: 13px; }
+.mode-label { display: inline-flex; align-items: center; gap: 6px; font-weight: 400; margin-right: 14px; }
+
+.hint { margin-top: 22px; font-size: 13px; color: #374151; }
+.hint summary { cursor: pointer; font-weight: 600; }
+.hint code {
+    background: #f3f4f6;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: Consolas, monospace;
+}
+
+.topbar { display: flex; justify-content: space-between; align-items: center; }
+.logout { color: #2563eb; text-decoration: none; font-size: 14px; }
+.logout:hover { text-decoration: underline; }
+.welcome { color: #374151; font-size: 14px; }
+
+table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+th, td { border: 1px solid #e5e7eb; padding: 8px 10px; text-align: left; }
+th { background: #f9fafb; }
+
+.note { color: #6b7280; font-size: 12px; margin-top: 16px; }

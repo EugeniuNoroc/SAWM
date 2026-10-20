@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в панель администратора</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="card">
+    <h1>Вход для администратора</h1>
+    <p class="subtitle">Лабораторная работа 2</p>
+
+    <div class="alert" th:if="${error}" th:text="${error}"></div>
+
+    <form id="loginForm" th:action="@{/login}" method="post" onsubmit="return validateForm();">
+
+        <label for="login">Логин</label>
+        <input type="text" id="login" name="login" th:value="${login}" autocomplete="off">
+
+        <label for="password">Пароль</label>
+        <input type="password" id="password" name="password" autocomplete="off">
+
+        <div class="mode">
+            <label class="mode-label">
+                <input type="radio" name="secure" value="true"  th:checked="${secure}"> Защищённый
+            </label>
+            <label class="mode-label">
+                <input type="radio" name="secure" value="false" th:checked="${!secure}"> Без защиты
+            </label>
+        </div>
+
+        <div class="alert client-alert" id="clientError" style="display:none;"></div>
+
+        <button type="submit">Войти</button>
+    </form>
+</div>
+
+<script th:src="@{/js/validation.js}"></script>
+</body>
+</html>

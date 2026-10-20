@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель администратора</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="card wide">
+    <div class="topbar">
+        <h1>Панель администратора</h1>
+        <a class="logout" th:href="@{/logout}">Выйти</a>
+    </div>
+
+    <p class="welcome">
+        Вы вошли как <b th:text="${user}">user</b>.
+        Это закрытое пространство, доступное только после аутентификации.
+    </p>
+
+    <h2>Таблица «user»</h2>
+    <table>
+        <thead>
+        <tr><th>id</th><th>login</th><th>password</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="u : ${users}">
+            <td th:text="${u.id}"></td>
+            <td th:text="${u.login}"></td>
+            <td th:text="${u.password}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p class="note">
+        Примечание: пароли показаны открыто только в учебных целях.
+        В реальных системах их хранят в виде хэша (BCrypt/Argon2).
+    </p>
+</div>
+</body>
+</html>

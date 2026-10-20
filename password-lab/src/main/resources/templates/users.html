@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таблица user</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="card xwide">
+    <div class="topbar">
+        <h1>Лаб. 4 — таблица «user»</h1>
+        <span class="mode-badge" th:text="${anyPlain} ? 'Пароли: ОТКРЫТЫЙ ТЕКСТ' : 'Пароли: Argon2id + соль'"></span>
+    </div>
+    <div class="switch">
+        <a th:href="@{/}">Гостевая книга (лаб. 3)</a>
+        <a th:href="@{/users}">Таблица user</a>
+        <a th:href="@{/h2-console}">H2-консоль</a>
+    </div>
+
+    <div class="ok" th:if="${ok}" th:text="${ok}"></div>
+    <div class="alert" th:if="${error}" th:text="${error}"></div>
+
+
+    <table class="users">
+        <tr><th>id</th><th>login</th><th>password (как хранится в БД)</th><th>соль (из строки)</th><th>email</th><th>MD5 без соли</th></tr>
+        <tr th:each="u : ${users}">
+            <td th:text="${u.id}"></td>
+            <td th:text="${u.login}"></td>
+            <td class="pw" th:classappend="${T(com.lab.security.PasswordService).isHashed(u.password)} ? 'hashed' : 'plain'"
+                th:text="${u.password}"></td>
+            <td class="pw" th:text="${T(com.lab.security.PasswordService).extractSalt(u.password)}"></td>
+            <td th:text="${u.email}"></td>
+            <td class="pw" th:text="${T(com.lab.security.PasswordService).isHashed(u.password)} ? '—' : ${T(com.lab.security.PasswordService).md5Insecure(u.password)}"></td>
+        </tr>
+    </table>
+
+    <form class="inline" th:action="@{/users/hash}" method="post" th:if="${anyPlain}">
+        <button class="green" type="submit">Захэшировать пароли (Argon2id + соль)</button>
+    </form>
+    <form class="inline" th:action="@{/users/reset}" method="post">
+        <button class="danger" type="submit">Сбросить таблицу в открытый вид</button>
+    </form>
+
+    <div class="row">
+        <form th:action="@{/users/login}" method="post">
+            <h2>Вход (проверка через хэш)</h2>
+            <label>Логин</label><input type="text" name="login">
+            <label>Пароль</label><input type="password" name="password">
+            <button type="submit">Войти</button>
+        </form>
+        <form th:action="@{/users/register}" method="post">
+            <h2>Регистрация (политика паролей)</h2>
+            <label>Логин</label><input type="text" name="login">
+            <label>Пароль (мин. 12 символов)</label><input type="password" name="password">
+            <label>E-mail</label><input type="text" name="email">
+            <button type="submit">Создать</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

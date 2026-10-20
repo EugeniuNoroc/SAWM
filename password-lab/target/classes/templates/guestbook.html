@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гостевая книга</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="card wide">
+    <div class="topbar">
+        <h1>Гостевая книга</h1>
+        <span class="mode-badge" th:text="${secure} ? 'Режим: защищённый' : 'Режим: без защиты'"></span>
+    </div>
+
+    <div class="switch">
+        <a th:href="@{/(secure=true)}">Защищённый</a>
+        <a th:href="@{/(secure=false)}">Без защиты</a>
+        <a th:href="@{/users}">Таблица user (лаб. 4)</a>
+    </div>
+
+    <div class="alert" th:if="${error}" th:text="${error}"></div>
+
+    <form th:action="@{/add}" method="post" onsubmit="return validateForm();">
+        <input type="hidden" name="secure" th:value="${secure}">
+
+        <label for="user">Имя</label>
+        <input type="text" id="user" name="user">
+
+        <label for="text_message">Сообщение</label>
+        <textarea id="text_message" name="text_message" rows="3"></textarea>
+
+        <label for="e_mail">E-mail</label>
+        <input type="text" id="e_mail" name="e_mail">
+
+        <div class="alert client-alert" id="clientError" style="display:none;"></div>
+
+        <button type="submit">Оставить запись</button>
+    </form>
+
+    <h2>Записи</h2>
+    <div class="entry" th:each="g : ${guests}">
+        <div class="entry-head">
+            <!-- В защищённом режиме выводим как текст (экранирование),
+                 в режиме без защиты — как сырой HTML (здесь и срабатывает XSS). -->
+            <b th:if="${secure}" th:text="${g.user}"></b>
+            <b th:unless="${secure}" th:utext="${g.user}"></b>
+            <span class="date" th:text="${g.dataTimeMessage}"></span>
+        </div>
+        <div class="entry-body">
+            <span th:if="${secure}" th:text="${g.textMessage}"></span>
+            <span th:unless="${secure}" th:utext="${g.textMessage}"></span>
+        </div>
+        <div class="entry-mail" th:text="${g.eMail}"></div>
+    </div>
+</div>
+
+<script th:src="@{/js/validation.js}"></script>
+</body>
+</html>
